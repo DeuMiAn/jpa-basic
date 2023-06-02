@@ -52,10 +52,17 @@ public class JpaMain {
 //            System.out.println("findMember.name= " + findMember.getName());
 
             //영속성 1차캐시검증-2 (쿼리 조회후 이후부터는 캐시조회테스트) 및 동일성 보장
-            Member findMember1 = em.find(Member.class, 101L);
-            Member findMember2 = em.find(Member.class, 101L);
+//            Member findMember1 = em.find(Member.class, 101L);
+//            Member findMember2 = em.find(Member.class, 101L);
+//
+//            System.out.println("result = " + (findMember1 == findMember2));
 
-            System.out.println("result = " + (findMember1 == findMember2));
+            Member member = new Member(200L, "member200");
+            em.persist(member);
+
+            em.flush();
+
+            System.out.println("===================================");
 
 
             tx.commit();
