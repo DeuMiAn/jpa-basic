@@ -1,42 +1,34 @@
 package hellojpa;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
-//@Entity 꼭 넣어야지 JPA가 인식함
 @Entity
-//@Table(name = "USERS") 이렇게하면 USERS 테이블에 넣어짐
+@SequenceGenerator(name = "member_seq_generator", sequenceName = "member_seq",initialValue = 1,allocationSize = 50)
 public class Member {
 
-    //    JPA에게 프라이머리키를 알려줘야함
-//    또한 ID와 비슷한 어노테이션이 많으면 javax.persistence를 선택할것
     @Id
-    private Long id;
-    private String name;
-
-    public Member(long id, String name) {
-        this.id=id;
-        this.name=name;
-
-    }
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator ="member_seq_generator")
+    private long id;
+    @Column(name = "name", nullable = false)
+    private String username;
 
     public Member() {
 
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
