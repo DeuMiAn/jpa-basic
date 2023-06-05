@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.Arrays;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -14,23 +15,19 @@ public class JpaMain {
         tx.begin();
 
         try {
+            Team team= new Team();
+            team.setName("TeamA");
+            em.persist(team);
 
-            Member member1 = new Member();
-            member1.setUsername("A");
-            Member member2 = new Member();
-            member2.setUsername("B");
-            Member member3 = new Member();
-            member3.setUsername("C");
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setTeam(team);
+            em.persist(member);
 
-            System.out.println("========================");
+            Member findMember = em.find(Member.class, member.getId());
 
-            //DB seq1
-            //DB seq51
-            em.persist(member1);
-            em.persist(member2);
-            em.persist(member3);
-            System.out.println("========================");
-
+            Team findTeam= findMember.getTeam();
+            System.out.println("findTeam = " + findTeam.getName());
             tx.commit();
 //에러없이 완료시 커밋
         } catch (Exception e) {
